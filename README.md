@@ -2,10 +2,13 @@
 
 Middle-of-funnel prototype: take a small set of labeled emails and file each one on the right open deal, with a reason and a score.
 
-This repo currently holds the flow explainer and the implementation plan. The matching harness is not built yet.
+This repo currently holds the data model, the flow explainer, and the implementation plan. The matching harness is not built yet.
 
-- Open [docs/flow.html](docs/flow.html) in a browser. Click a stage to flip it; flipped cards stay until you click them again.
-- Next steps live in [PLAN.md](PLAN.md).
+- Canonical objects and CRM mapping: [schema/README.md](schema/README.md)
+- Entity-relationship diagram: [schema/er.md](schema/er.md)
+- JSON Schema: [schema/canonical.schema.json](schema/canonical.schema.json)
+- Click-to-flip loop: [docs/flow.html](docs/flow.html)
+- Next steps: [PLAN.md](PLAN.md).
 
 ## Why this exists
 

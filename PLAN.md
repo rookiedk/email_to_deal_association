@@ -1,6 +1,6 @@
 # Plan
 
-Status: explainer only. No matcher, Clay client, or eval harness yet.
+Status: data model and explainer are in-repo. No matcher, Clay client, or eval harness yet.
 
 ## What we already decided
 
@@ -9,6 +9,7 @@ Status: explainer only. No matcher, Clay client, or eval harness yet.
 - **Clay’s role:** entity resolution — person and company from the sender. Not the deal pick.
 - **Deal catalog stays local.** Sending open deals into Clay (logs, workspace, and any model prompt) is an unnecessary pipeline leak. The harness matches locally after Clay returns who/what the sender is.
 - **Demo mode:** replay cached Clay responses so the loop runs without a live key. Live mode is opt-in.
+- **Canonical model:** accounts, contacts, deals, deal-contact roles, emails, associations, gold labels, and audit events. See [schema/README.md](schema/README.md), [schema/er.md](schema/er.md), and [schema/canonical.schema.json](schema/canonical.schema.json). Salesforce/HubSpot names map onto these fields; they are not copied 1:1.
 
 ```mermaid
 flowchart LR
@@ -30,7 +31,7 @@ flowchart LR
 
 ## Build sequence
 
-### 1. Dataset
+### 1. Dataset (conforms to the canonical schema)
 
 - ~8–12 synthetic deals across a few accounts (at least one account with two open deals).
 - ~12–15 emails: exact email match, Gmail/signature-only, ambiguous multi-deal account, lookalike company, thread follow-up, closed-deal trap, true negatives (no deal).
@@ -71,7 +72,7 @@ CLI prints the metrics table. A small local page to open one email and see extra
 
 After this plan is agreed in code review:
 
-1. Add `data/crm.json` and `data/emails.json`.
+1. Add `data/crm.json` and `data/emails.json` that validate against `schema/canonical.schema.json`.
 2. Add a Clay client with replay fixtures (fake enrich responses is enough to wire the rest).
 3. Add local scoring + audit + a CLI `eval --replay`.
 4. Wire live Clay last, once the function exists in the Clay UI.
